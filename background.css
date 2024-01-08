@@ -1,0 +1,7 @@
+/* Basic CSS for setting the background color */
+body {
+    background-color: #d1c7e6; /* Light purple color */
+    margin: 0; /* Removes default margin */
+    padding: 0; /* Removes default padding */
+    font-family: Arial, sans-serif; /* Sets a default font */
+}
