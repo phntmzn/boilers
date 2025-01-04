@@ -3,13 +3,25 @@ import random
 import hashlib
 import multiprocessing
 
-time_values = {
-    "whole": 4,
-    "half": 2,
-    "quarter": 1,
-    "dotted_half": 0.5,
-    "eighth_note" 
-
+time_value_durations = {
+    "whole_note": 4,                # 4 beats
+    "dotted_whole_note": 6,         # 1.5x the duration of a whole note
+    "half_note": 2,                 # 2 beats
+    "dotted_half_note": 3,          # 1.5x the duration of a half note
+    "quarter_note": 1,              # 1 beat
+    "dotted_quarter_note": 1.5,     # 1.5x the duration of a quarter note
+    "eighth_note": 0.5,             # Half a beat
+    "dotted_eighth_note": 0.75,     # 1.5x the duration of an eighth note
+    "sixteenth_note": 0.25,         # Quarter of a beat
+    "dotted_sixteenth_note": 0.375, # 1.5x the duration of a sixteenth note
+    "thirty_second_note": 0.125,    # Eighth of a beat
+    "dotted_thirty_second_note": 0.1875, # 1.5x the duration of a thirty-second note
+    "sixty_fourth_note": 0.0625,    # Sixteenth of a beat
+    "dotted_sixty_fourth_note": 0.09375, # 1.5x the duration of a sixty-fourth note
+    "one_hundred_twenty_eighth_note": 0.03125, # 1/32 of a beat
+    "dotted_one_hundred_twenty_eighth_note": 0.046875, # 1.5x the duration of a 128th note
+    "two_hundred_fifty_sixth_note": 0.015625, # 1/64 of a beat
+    "dotted_two_hundred_fifty_sixth_note": 0.0234375 # 1.5x the duration of a 256th note
 }
 
 CHORD_PATTERNS = {
@@ -123,7 +135,14 @@ chord_probabilities = [0.20, 0.15, 0.15, 0.15, 0.20, 0.10, 0.05]  # Example prob
 durations = ['quarter', 'eighth', 'half', 'whole']
 duration_probabilities = [0.4, 0.3, 0.2, 0.1]  # Example probabilities
 
-# Generate twelve-tone row using numpy's random.choice with probabilities
+
+
+#////////////////////////////////////////////////////////////////////////
+#///////////////////// TONE-ROW //////////////////////////////////////////
+#/////////////////////////////////////////////////////////////////////// 
+
+
+# Generate twelve-tone row using numpy's random.choice with probabilities # NO RANDOM!
 def generate_twelve_tone_row():
     return np.random.choice(notes, size=12, replace=False).tolist()
 
@@ -156,6 +175,14 @@ def invert(sequence):
 
 def retrograde(sequence):
     return sequence[::-1]
+
+
+
+
+#////////////////////////////////////////////////////////////////////
+#/////////////////////// FINITE-STATE-MACHINE CLASS//////////////////
+#////////////////////////////////////////////////////////////////////
+
 
 # Define state and FSM classes
 class State:
@@ -195,7 +222,12 @@ apply_transformation_state.transitions = {
     'next': generate_melody_state
 }
 
-# Generate unique songs using FSM NO MORE RANDOM! ALSO USE DFA 
+
+
+#//////////////////////////////////////////////////////////////
+#                      UNI-GENERATOR                  #
+# Generate unique songs using FSM NO MORE RANDOM! ALSO USE DFA
+#/////////////////////////////////////////////////////////////
 def generate_unique_song(queue, fsm):
     while True:
         if fsm.get_current_state() == 'GenerateMelody':
@@ -248,6 +280,12 @@ def consumer(queue, target):
                 print(f"Generated {generated} unique songs")
 
     print("Finished generating 20 billion unique songs.")
+
+
+#//////////////////////////////////////////////////////////////
+#////////////////////// MULTI-PROCESSING /////////////////////
+#/////////////////////////////////////////////////////////////
+
 
 if __name__ == '__main__':
     target = 20_000_000_000  # 20 billion unique songs
