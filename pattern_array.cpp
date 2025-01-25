@@ -3,6 +3,7 @@
 #include <vector>
 #include <unordered_map>
 
+// Global chord patterns
 std::unordered_map<std::string, std::vector<int>> CHORD_PATTERNS = {
     // Triads
     {"Major", {0, 4, 7}},
